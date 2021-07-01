@@ -5,6 +5,12 @@
  */
 package gamegourmet;
 
+import gamegourmet.entity.Food;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ermim
@@ -16,7 +22,29 @@ public class GameGourmet {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.out.println("Olá Mundo!");
+        List<Food> listFood = new ArrayList();
+        
+        listFood.add(new Food("Macarrao"));
+        listFood.add(new Food("Lasanha"));
+
+       showList(listFood);
+        
+        listFood.add(new Food(showMenu()));
+        
+        showList(listFood);
     }
     
+    public static String showMenu(){
+        String foodOption = JOptionPane.showInputDialog( " Informe qual a comida: " );
+        return foodOption;
+    }
+    
+    public static void showList(List<Food> myList){
+         for (int i = 0; i < myList.size(); i++) {
+            String message = "Prato sugerido: " + myList.get(i).getDescription();
+            JFrame frame = new JFrame("JOptionPane exemplo");
+            JOptionPane.showMessageDialog(frame, message);
+        }
+    }
+
 }
