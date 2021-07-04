@@ -5,13 +5,10 @@
  */
 package gamegourmet;
 
-import static Helpers.Strings.CASE_SUCCESS;
-import static Helpers.Strings.MSG_START_GAME;
-import static Helpers.Strings.PROJECT_NAME;
-import static Helpers.Strings.QUESTION_FOOD_CATEGORY;
-import static gamegourmet.GameGourmet.howDifference;
+import static Helpers.Strings.*;
 import gamegourmet.entity.Category;
 import gamegourmet.entity.Food;
+import static java.lang.String.format;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
@@ -22,6 +19,9 @@ import javax.swing.JOptionPane;
  * @author ermim
  */
 public class GameShow {
+
+    public static final int YES_FOOD_CORRECT = 0;
+    public static final int NO_FOOD_INCORRECT = 1;
 
     List<Food> listFood = new ArrayList();
     List<Category> listCategory = new ArrayList();
@@ -34,18 +34,38 @@ public class GameShow {
         int startGame = JOptionPane.showConfirmDialog(null,
                 MSG_START_GAME, PROJECT_NAME, JOptionPane.DEFAULT_OPTION);
 
-        int input = JOptionPane.showConfirmDialog(null,
-                QUESTION_FOOD_CATEGORY, PROJECT_NAME, JOptionPane.YES_NO_OPTION);
+        question();
+    }
 
-        if (input == 0) {
+    public void question() {
+
+        int input = JOptionPane.showConfirmDialog(null,
+                format(QUESTION_FOOD_CATEGORY, "teste"), PROJECT_NAME, JOptionPane.YES_NO_OPTION);
+
+        if (input == YES_FOOD_CORRECT) {
             int continueOK = JOptionPane.showConfirmDialog(null,
                     CASE_SUCCESS, PROJECT_NAME, JOptionPane.DEFAULT_OPTION);
+
+            startShow();
         }
 
-        if (input == 1) {
-            //listFood.add(new Food(showMenu()));
-            listCategory.add(new Category(howDifference()));
+        if (input == NO_FOOD_INCORRECT) {
+            //adicionar e rodar os no
+            Food foodItem = new Food(getFoodThink(), false);
+            Food category = new Food(howDifference(foodItem, new Food("coca", false)), true);
+            //cria o novo no e start novamente
+            startShow();
         }
+    }
+
+    public static String getFoodThink() {
+        String foodOption = JOptionPane.showInputDialog(WHAT_FOOD_THINK);
+        return foodOption;
+    }
+
+    public static String howDifference(Food foodItem, Food compareItem) {
+        String differenceFood = JOptionPane.showInputDialog(format(WHAT_DIFERENCE_FOODS, foodItem.getDescription(), compareItem.getDescription()));
+        return differenceFood;
     }
 
 }
