@@ -11,8 +11,9 @@ package gamegourmet.entity;
  */
 public class Food {
     private String description;
+    private boolean isCategory;
 
-    public Food(String description) {
+    public Food(String description, boolean isCategory) {
         this.description = description;
     }
 
@@ -23,5 +24,12 @@ public class Food {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
+    public boolean isIsCategory() {
+        return isCategory;
+    }
+
+    public void setIsCategory(boolean isCategory) {
+        this.isCategory = isCategory;
+    }    
 }
