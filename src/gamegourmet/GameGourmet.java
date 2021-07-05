@@ -5,15 +5,6 @@
  */
 package gamegourmet;
 
-import static Helpers.Strings.*;
-import gamegourmet.entity.TreeFactory;
-import gamegourmet.entity.Food;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author ermim

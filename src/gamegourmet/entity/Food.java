@@ -15,6 +15,7 @@ public class Food {
 
     public Food(String description, boolean isCategory) {
         this.description = description;
+        this.isCategory = isCategory;
     }
 
     public String getDescription() {
@@ -25,7 +26,7 @@ public class Food {
         this.description = description;
     }
 
-    public boolean isIsCategory() {
+    public boolean isCategory() {
         return isCategory;
     }
 
