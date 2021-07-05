@@ -6,7 +6,7 @@
 package gamegourmet;
 
 import static Helpers.Strings.*;
-import gamegourmet.entity.Category;
+import gamegourmet.entity.TreeFactory;
 import gamegourmet.entity.Food;
 import java.util.ArrayList;
 import java.util.List;

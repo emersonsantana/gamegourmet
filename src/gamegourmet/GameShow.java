@@ -6,7 +6,7 @@
 package gamegourmet;
 
 import static Helpers.Strings.*;
-import gamegourmet.entity.Category;
+import gamegourmet.entity.TreeFactory;
 import gamegourmet.entity.Food;
 import static java.lang.String.format;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class GameShow {
     public static final int NO_FOOD_INCORRECT = 1;
 
     List<Food> listFood = new ArrayList();
-    List<Category> listCategory = new ArrayList();
+    List<TreeFactory> listCategory = new ArrayList();
 
     public GameShow() {
         //nothing
