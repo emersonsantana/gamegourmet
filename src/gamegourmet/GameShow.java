@@ -22,10 +22,7 @@ public class GameShow {
 
     public static final int YES_FOOD_CORRECT = 0;
     public static final int NO_FOOD_INCORRECT = 1;
-
-    List<Food> listFood = new ArrayList();
-    List<TreeFactory> listCategory = new ArrayList();
-
+    
     public GameShow() {
         //nothing
     }

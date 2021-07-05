@@ -15,6 +15,19 @@ public class TreeFactory {
     public TreeFactory(NodeFood rootFood) {
         this.rootFood = rootFood;
     }
+    
+    public void generateNode(NodeFood node, String description, String category){
+        Food presentFood =  node.getNodeElem();
+        Food newFood = new Food(category, true);
+        node.setNodeElem(newFood);
+        
+        Food foodChildRight = new Food(description, false);
+        
+        NodeFood nodeChildRight = new NodeFood(foodChildRight);
+        node.setNodeChildRight(nodeChildRight);
+        NodeFood nodeChildLeft = new NodeFood(presentFood);
+        node.setNodeChildLeft(nodeChildLeft);
+    }
 
     public NodeFood getRootFood() {
         return rootFood;
