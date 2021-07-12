@@ -23,23 +23,23 @@ public class GameShow {
     private int countSuccess = 0;
     private TreeFactory treeFactory;
     private NodeFood root;
-   
+
     public GameShow() {
         root = startNode();
         treeFactory = new TreeFactory(startNode());
     }
-    
-    public NodeFood startNode(){
+
+    public NodeFood startNode() {
         Food massa = new Food("Massa", true);
         Food boloDeChocolate = new Food("Bolo de Chocolate", false);
         Food lasanha = new Food("Lasanha", false);
 
         NodeFood root = new NodeFood(massa);
-        root.setNodeChildRight(new NodeFood(boloDeChocolate));
-        root.setNodeChildLeft(new NodeFood(lasanha));
+        root.setNodeChildRight(new NodeFood(lasanha));
+        root.setNodeChildLeft(new NodeFood(boloDeChocolate));
         return root;
     }
-    
+
     public void startShow() {
         int startGame = JOptionPane.showConfirmDialog(null,
                 MSG_START_GAME, PROJECT_NAME, JOptionPane.DEFAULT_OPTION);
@@ -48,70 +48,32 @@ public class GameShow {
     }
 
     public void question(NodeFood node) {
-        
         int input = JOptionPane.showConfirmDialog(null,
-                format(QUESTION_FOOD_CATEGORY, node.getNodeElem().getDescription()), PROJECT_NAME, JOptionPane.YES_NO_OPTION);
+                format(QUESTION_FOOD_NAME, node.getNodeElem().getDescription()),
+                PROJECT_NAME, JOptionPane.YES_NO_OPTION);
 
-        if (input == YES_FOOD_CORRECT) {
-            if(!node.getNodeElem().isCategory()){             
-                int continueOK = JOptionPane.showConfirmDialog(null,
-                    countSuccess > 0 ? CASE_SUCCESS_AGAIN : CASE_SUCCESS_FIRST, PROJECT_NAME, JOptionPane.DEFAULT_OPTION);
-                countSuccess++;
-                startShow();
-            }
-            
-            NodeFood itemInQuestion = node;
-            if(node.getNodeElem().isCategory()){
-                 itemInQuestion = node.getNodeChildLeft(); 
-            }
-            
-            int foodChoice = JOptionPane.showConfirmDialog(null,
-                format(QUESTION_FOOD_NAME, itemInQuestion.getNodeElem().getDescription()), PROJECT_NAME, JOptionPane.YES_NO_OPTION);
-            
-            if(foodChoice == YES_FOOD_CORRECT){
-                if(!itemInQuestion.getNodeElem().isCategory()){ 
-                  int continueOK = JOptionPane.showConfirmDialog(null,
-                  countSuccess > 0 ? CASE_SUCCESS_AGAIN : CASE_SUCCESS_FIRST, PROJECT_NAME, JOptionPane.DEFAULT_OPTION);
-                  countSuccess++;   
-                  startShow();
-                }
-                if(itemInQuestion.getNodeElem().isCategory()){
-                    if(itemInQuestion.getNodeChildRight()!=null){
-                        question(itemInQuestion.getNodeChildRight());
-                    }
-                    if(itemInQuestion.getNodeChildLeft() == null){
-                        newElementInTree(itemInQuestion);
-                        startShow();
-                    }                    
-                }                
-            }
-             if(foodChoice == NO_FOOD_INCORRECT){
-                 newElementInTree(itemInQuestion);
-                 startShow();
-             }
+        if (input == YES_FOOD_CORRECT && !node.getNodeElem().isCategory()) {
+            JOptionPane.showConfirmDialog(null, countSuccess > 0 ? CASE_SUCCESS_AGAIN : CASE_SUCCESS_FIRST,
+                            PROJECT_NAME,
+                            JOptionPane.DEFAULT_OPTION);
+            countSuccess++;
+            startShow();
+        } else if (input == 0 && treeFactory.getRootFood().getNodeChildRight() != null) {
+            question(node.getNodeChildRight());
         }
 
-        if (input == NO_FOOD_INCORRECT) {
-            if(node.getNodeChildRight() != null){
-                question(node.getNodeChildRight());
-            }
-            
-            if(!node.getNodeElem().isCategory()){
-               newElementInTree(node);
-               startShow();
-            }
-            if(node.getNodeElem().isCategory()){
-                question(node.getNodeChildLeft());
-            }
-            
-            startShow();
+        if (input == NO_FOOD_INCORRECT && !node.getNodeElem().isCategory()) {
+            newElementInTree(node);
+        } else {
+            question(node.getNodeChildLeft());
         }
     }
-    
-    public void newElementInTree(NodeFood node){
-      String foodItem = getFoodThink();
-      String category = howDifference(foodItem, node.getNodeElem().getDescription());
-      treeFactory.generateNode(node, foodItem, category);
+
+    public void newElementInTree(NodeFood node) {
+        String foodItem = getFoodThink();
+        String category = howDifference(foodItem, node.getNodeElem().getDescription());
+        treeFactory.generateNode(node, foodItem, category);
+        startShow();
     }
 
     public static String getFoodThink() {
